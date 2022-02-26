@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\UserDashboard;
 use App\Http\Controllers\ServiceManDashboardController;
+use App\Http\Controllers\PaytmController;
 
 //User Dashboard
 Route::get('/user-dashboard',[UserDashboard::class,'userDashboard'])->name('userDashboard');
@@ -26,3 +27,23 @@ Route::get('/add-service/{id}',[UserDashboard::class,'addService'])->name('addSe
 Route::post('add-service',[UserDashboard::class,'userServiceSubmit'])->name('userServiceSubmit');
 Route::get('/user-logout',[UserDashboard::class,'userLogout'])->name('userLogout');
 Route::post('user-profile-update', [UserDashboard::class, 'user_profile_update'])->name('user-profile-update');
+<<<<<<< HEAD
+=======
+
+//User Dashboard
+Route::get('/service-dashboard',[ServiceManDashboardController::class,'index'])->name('serviceDashboarad');
+Route::get('/service-details',[ServiceManDashboardController::class,'serviceDetails'])->name('serviceDetails');
+Route::get('/profile',[ServiceManDashboardController::class,'profile'])->name('serviceManProfile');
+Route::get('/service-man-logout',[ServiceManDashboardController::class,'logout'])->name('serviceManLogout');
+
+
+// PAYTM API
+
+Route::get('/initiate',[PaytmController::class, 'initiate'])->name('initiate.payment');
+
+Route::post('/payment',[PaytmController::class, 'pay'])->name('make.payment');
+
+Route::post('/payment/status', [PaytmController::class, 'paymentCallback'])->name('status');
+
+Route::get('/payment', [PaytmController::class, 'initiate']);
+>>>>>>> 4363220797c2ce87aba1cbc984921358662ba0c9

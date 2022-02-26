@@ -65,7 +65,10 @@ use App\Http\Controllers\WebsiteController;
                                             <div class="col-md-4">
                                           
                                             <div class="job-description">
-                                            @if(isset($data->service_man_id))  Completed Service Date Time: {{ $data->service_man_id }}  @endif
+                                            @if($data->status == 3)
+                                            Completed Service Date Time: {{ date('d-m-Y', strtotime($data->complete_service_date)) }}
+                                            {{$data->complete_service_time}}  
+                                            @endif
                                             </div>
                                          
                                       </div
@@ -167,7 +170,9 @@ use App\Http\Controllers\WebsiteController;
                         <div class="col-lg-12">
                             <div class="ht-simple-job-listing move-up animate">
                                 <div clas="list">
-                                   
+                                   <form action="{{ route('make.payment') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="pay_amount" value="{{$total}}">
                                    <table class="table">
                                     <thead>
                                        
@@ -175,13 +180,13 @@ use App\Http\Controllers\WebsiteController;
                                       
                                         <tr>
                                             <th>Total With Service Charges</th>
-                                            <th><a href="" class="btn btn-primary"> {{ $total }} Pay </a></th>
+                                            <th><button type="submit" class="btn btn-primary"> {{ $total }} Pay </button></th>
                                         </tr>
                                         
                                     </thead>
                              
                                 <table>
-                                    
+                                </form>
                                 </div>
                                 </div>
                             </div>

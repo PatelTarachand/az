@@ -66,7 +66,7 @@ class UserDashboard extends Controller
            $total = $total + $service_charges->amount;
          }
           
-    
+         
 
          return view('userDashboard.service_details', compact('data','items','sum','packages','total'));
     }
