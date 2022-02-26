@@ -8,7 +8,7 @@ use App\Models\PurchaseItem;
 use App\Models\ApplyService;
 use App\Models\packages;
 use App\Models\UserPackage;
-
+use Auth;
 use App\Models\User;
 use Session;
 use Redirect;
@@ -57,25 +57,30 @@ class ServiceManDashboardController extends Controller
         $records = PurchaseItem::where('service_id',$request->id)->get();
         $html='';
         $i=1;
+       
         foreach($records as $tc){
 
             $status ='';
             if($tc->status==0){
-                $status ='Not Approved';
+                $route ="item_delete/".$tc->id;
+                $status ='<a href="'.$route.'" class="btn btn-danger">x</a>';
+                
             }elseif($tc->status==1){
                 $status ='Approved';
+
             }elseif($tc->status==2){
                 $status ='Cancel';
             }
-            $route ="item_delete/".$tc->id;
-            $action ='<a href="'.$route.'" class="btn btn-danger">x</a>';
+            
+          
+           
             $html.='<tr>
                     <td>'.$i.'</td>
-                    <td>'.$tc->item_name.'('.$status.')</td>
+                    <td>'.$tc->item_name.'</td>
                     <td>'.$tc->price.'</td>
                     <td>'.$tc->qty.'</td>
                     <td>'.$tc->total.'</td>
-                    <td>'.$action.'</td>
+                    <td>'.$status.'</td>
             </tr>';
         }
 
@@ -107,11 +112,13 @@ class ServiceManDashboardController extends Controller
     }
 
     public function profile(){
-        return view('ServiceManDashboard.profile');
+        $data = User::find(Auth::user()->id);
+        return view('ServiceManDashboard.profile',compact('data'));
     }
 
     public function logout(){
-        return "logout";
+        Auth::logout();
+        return redirect(route('index'));
     }
 
     public function serviceDetails(){
