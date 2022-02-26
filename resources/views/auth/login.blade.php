@@ -1,48 +1,96 @@
-<x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
+<!DOCTYPE html>
+<html>
 
-        <x-jet-validation-errors class="mb-4" />
+<!-- Mirrored from thetheme.io/flaty/extra_login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jul 2020 04:49:17 GMT -->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>A2Z TECH Admin</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        @if (session('status'))
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+<!--base css styles-->
+<link rel="stylesheet" href="{{ asset('public/assets/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('public/assets/font-awesome/css/font-awesome.min.css') }}">
+
+<!--page specific css styles-->
+
+<!--flaty css styles-->
+<link rel="stylesheet" href="{{ asset('public/css/flaty.css') }}">
+<link rel="stylesheet" href="{{ asset('public/css/flaty-responsive.css') }}">
+
+<link rel="shortcut icon" href="{{ asset('public/img/favicon.html') }}">
+</head>
+<body class="login-page">
+
+<!-- BEGIN Main Content -->
+<div class="login-wrapper">
+
+      @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
                 {{ session('status') }}
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+<!-- BEGIN Login Form -->
+<form id="form-login" method="POST" action="{{ route('login') }}">
+    @csrf
 
-            <div>
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
+<h3>Admin Login</h3>
+<hr/>
+<div class="form-group">
+<div class="controls">
+<input type="email" name="email" :value="old('email')" required autofocus placeholder="Email" class="form-control" />
+</div>
+</div>
+<div class="form-group">
+<div class="controls">
+<input type="password" name="password" required autocomplete="current-password" placeholder="Password" class="form-control" />
+</div>
+</div>
 
-            <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
+<div class="form-group">
+<div class="controls">
+   
+<button type="submit" class="btn btn-primary form-control">Sign In</button>
+</div>
+</div>
+<hr/>
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
+</form>
+<!-- END Login Form -->
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
+</div>
+<!-- END Main Content -->
 
-                <x-jet-button class="ml-4">
-                    {{ __('Login') }}
-                </x-jet-button>
-            </div>
-        </form>
-    </x-jet-authentication-card>
-</x-guest-layout>
+
+<!--basic scripts-->
+<script src="../../ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{ asset("public/assets/jquery/jquery-2.1.1.min.js") }}"><\/script>')</script>
+<script src="{{ asset('public/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+
+<script type="text/javascript">
+function goToForm(form)
+{
+$('.login-wrapper > form:visible').fadeOut(500, function(){
+$('#form-' + form).fadeIn(500);
+});
+}
+$(function() {
+$('.goto-login').click(function(){
+goToForm('login');
+});
+$('.goto-forgot').click(function(){
+goToForm('forgot');
+});
+$('.goto-register').click(function(){
+goToForm('register');
+});
+});
+</script>
+</body>
+
+<!-- Mirrored from thetheme.io/flaty/extra_login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jul 2020 04:49:17 GMT -->
+</html>
