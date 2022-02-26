@@ -12,16 +12,26 @@ use App\Models\UserPackage;
 use App\Models\User;
 use Session;
 use Redirect;
-
+use Illuminate\Support\Facades\Auth;
 
 class UserDashboard extends Controller
 {
     
+
+    public function user_profile_update(Request $request)
+    {
+        $id = Auth::id();
+        $data = $request->all();
+        unset($data['_token']);
+        if(User::where('id', $id)->update($data)){
+            Session::flash('success', 'Profile Update Sucessfully');
+            return Redirect::back();
+        }
+    }
+
     public function userLogout(){
-            Session::flush('uid');
-            return Session::get('uid');
-            // Session::put('uname', $user->name);
-            // Session::put('uemail', $user->email);
+        Auth::logout();
+        return redirect('/');            
     }
     
     public function userDashboard(){

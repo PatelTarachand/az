@@ -28,11 +28,13 @@ use App\Http\Controllers\AdminController;
             <td>{{ $row->description }}</td>
             <td>{{ $row->manual_address }}</td>
             <td>
-                @if($row->status == 0)
-                  Request Service
-                @else
-                In-Active
-                @endif
+              @if($row->status == 0)
+              Waiting for Approval
+              @elseif($row->status == 1)
+                   Task Assigned             
+              @elseif($row->status == 2)
+                  Proccessing                
+              @endif
             </td>
             <td>
             @if(isset($row->service_man_id))

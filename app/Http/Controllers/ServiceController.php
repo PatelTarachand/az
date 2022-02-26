@@ -17,8 +17,12 @@ class ServiceController extends Controller
      */
     public function index(Request $request)
     {
-        
-         $data = ApplyService::with('categories', 'sub_categories')->where('status',0)->paginate(10);
+        $service_status = $request->service_status;
+        if(!empty($service_status)){
+            $data = ApplyService::with('categories', 'sub_categories')->where('status',$service_status)->paginate(10);
+        }else{
+            $data = ApplyService::with('categories', 'sub_categories')->where('status',0)->paginate(10);
+        }        
          
   
         if ($request->ajax()) {

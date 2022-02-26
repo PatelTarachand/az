@@ -80,25 +80,19 @@ class WebsiteController extends Controller
         
         $mobile = Session::get('sMobile');
         $otp = $request->otp;
-        
+        $digits = 4;
+        $new_otp = rand(pow(10, $digits-1), pow(10, $digits)-1);
         $vefiry = User::where(['mobile'=>$mobile, 'otp'=>$otp])->count();
 
        if(\Auth::attempt(['mobile' => $mobile, 'password' => $otp])){ 
             $res =  $user =\Auth::user(); 
-            User::where(['mobile'=>$mobile, 'password'=>$otp])->update(['veryfycode'=>$otp]);
-            $success['id'] =  $res->id;
-            $success['name'] =  $res->name;
-            $success['email'] =  $res->email;
-            $success['mobile'] =  $res->mobile;
-            $success['address'] =  $res->address;
-            $success['profile_photo_path'] =  $res->profile_photo_path;      
-            $success['authtoken'] =$res->createToken($res->mobile)->plainTextToken;
-            return Redirect('user-home');    
+            User::where('id',$res->id)->update(['password'=>$new_otp]);
+            return redirect(route('userHome'));    
         }else{
             $success['mobile'] =  $mobile;
             $success['otp'] =  $otp;
             Session::flash('error_otp', 'Invalid otp');
-            return Redirect::back();
+            return Redirect('user-otp-form');
         }
 
 
@@ -107,9 +101,13 @@ class WebsiteController extends Controller
     }
     
     public function userHome(){
-         $data['user_id'] = \Auth::user()->id;
-        $category = category::where('status', 1)->get();
-        return view('userDashboard.index', ['category'=>$category]);
+        if(\Auth::user()){
+            $data['user_id'] = \Auth::user()->id;
+            $category = category::where('status', 1)->get();
+            return view('userDashboard.index', ['category'=>$category]);
+        }
+        return redirect(route('userLogin'));
+        
     }
     
     
@@ -119,7 +117,7 @@ class WebsiteController extends Controller
     }
 
 
-    public static function getData($table, $key, $value, $key2, $value2,){
+    public static function getData($table, $key, $value, $key2, $value2){
         $res = DB::table($table)->where($key, $value)->where($key, $value)->get();
         return $res;
     }

@@ -31,7 +31,7 @@ Route::post('/user-login-submit',[WebsiteController::class,'userLoginSubmit'])->
 Route::get('/user-otp-form',[WebsiteController::class,'userOtpForm']);
 Route::post('/user-otp',[WebsiteController::class,'userOtp'])->name('userOtp');
 Route::post('/user-otp-submit',[WebsiteController::class,'userOtpSubmit'])->name('userOtpSubmit');
-Route::get('/user-home',[WebsiteController::class,'userHome']);
+Route::get('/user-home',[WebsiteController::class,'userHome'])->name('userHome');
 
 
 //employee login
