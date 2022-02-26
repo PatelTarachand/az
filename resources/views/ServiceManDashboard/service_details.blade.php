@@ -10,20 +10,9 @@ use App\Http\Controllers\WebsiteController;
     <div id="main-wrapper">
         <div class="site-wrapper-reveal">
             <!--====================  Conact us Section Start ====================-->
-            <div class="feature-images-wrapper bg-gray section-space--ptb_100" style="padding-top: 19px;">
+            <div class="feature-images-wrapper bg-gray " style="padding-top: 19px;">
                 <div class="container">
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <!-- section-title-wrap Start -->
-                            <div class="section-title-wrap text-center">
-                           
-                                <h3 class="heading">Service Details</h3>
-                           
-                            </div>
-                            <!-- section-title-wrap Start -->
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -33,10 +22,14 @@ use App\Http\Controllers\WebsiteController;
                                     
                                     <div class="item" style="background:white; border-left: 7px solid #086AD8;">
                                         <div class="row">
-                                            
-
+                                        <center>    
+                                        <u>
+                                        <h5 class="heading pull-center">Service Details</h5>
+                                        </u>
+                                        </center>
                                             <div class="col-md-12">
                                                 <div class="job-description">
+                                                <b>
                                                 Customer Name : {{ $data->name }} <br>
                                                 Customer Mobile : {{ $data->mobile }} <br>
                                                 Customer Address : {{ $data->manual_address }} <br>
@@ -68,7 +61,7 @@ use App\Http\Controllers\WebsiteController;
                                                            Start Work On : {{ date('d-m-Y',strtotime($data->start_work_date)) }} {{ $data->start_work_time }}                       
                                                             @endif
                                                   
-                                                    
+                                                    </b>
                                                 </div>
                                             </div>
                                           
@@ -91,22 +84,15 @@ use App\Http\Controllers\WebsiteController;
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <!-- section-title-wrap Start -->
-                            <div class="section-title-wrap text-center">
-                           
-                                <h3 class="heading">Add Item</h3>
-                           
-                            </div>
-                            <!-- section-title-wrap Start -->
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-12">
                             <div class="ht-simple-job-listing move-up animate">
+                            
                                 <div clas="list">
                                 <div class="item" style="background:white; border-left: 7px solid   #086AD8;     padding: 10px;">
-                                   
+                                <center>    
+                                        <u>
+                                        <h5 class="heading pull-center">Add Item</h5>
+                                        </u>
+                                        </center>
                                    <table class="table">
                                     <thead>
                                         <tr>
@@ -142,8 +128,9 @@ use App\Http\Controllers\WebsiteController;
                                 
                                
                                 <table>
-                                    
                                 </div>
+
+                                <a class="btn" href="" style="text-align:right;">Complete Service</a>
                                 </div>
                             </div>
                         </div>

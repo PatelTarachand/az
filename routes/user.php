@@ -26,9 +26,3 @@ Route::get('/add-service/{id}',[UserDashboard::class,'addService'])->name('addSe
 Route::post('add-service',[UserDashboard::class,'userServiceSubmit'])->name('userServiceSubmit');
 Route::get('/user-logout',[UserDashboard::class,'userLogout'])->name('userLogout');
 Route::post('user-profile-update', [UserDashboard::class, 'user_profile_update'])->name('user-profile-update');
-
-//User Dashboard
-Route::get('/service-dashboard',[ServiceManDashboardController::class,'index'])->name('serviceDashboarad');
-Route::get('/service-details',[ServiceManDashboardController::class,'serviceDetails'])->name('serviceDetails');
-Route::get('/profile',[ServiceManDashboardController::class,'profile'])->name('serviceManProfile');
-Route::get('/service-man-logout',[ServiceManDashboardController::class,'logout'])->name('serviceManLogout');

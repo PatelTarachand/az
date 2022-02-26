@@ -44,3 +44,7 @@ Route::get('/start-work/{id}',[ServiceManDashboardController::class,'startWork']
 Route::get('/add_items',[ServiceManDashboardController::class,'add_items'])->name('add_items');
 Route::get('/item_details',[ServiceManDashboardController::class,'item_details'])->name('item_details');
 Route::get('/emp-assign-services-details/item_delete/{id}',[ServiceManDashboardController::class,'item_delete'])->name('item_delete');
+Route::get('/service-dashboard',[ServiceManDashboardController::class,'index'])->name('serviceDashboarad');
+Route::get('/service-details',[ServiceManDashboardController::class,'serviceDetails'])->name('serviceDetails');
+Route::get('/profile',[ServiceManDashboardController::class,'profile'])->name('serviceManProfile');
+Route::get('/service-man-logout',[ServiceManDashboardController::class,'logout'])->name('serviceManLogout');

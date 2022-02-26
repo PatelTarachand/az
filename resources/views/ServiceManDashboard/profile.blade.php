@@ -21,46 +21,26 @@
                            
                             <div class="contact-form-wrap">
                             
-                            
-
-                                <form  action="{{ route('userLoginSubmit') }}" method="post">
-                                    @csrf
+  
                                     <div class="contact-form">
                                        
                                         <div class="contact-inner">
-                                            <input name="name" type="text" placeholder="Enter Name">
-                                        </div>
-
-                                        <div class="contact-inner">
-                                            <input name="email" type="email" placeholder="Enter Email">
-                                        </div>
-
-                                        <div class="contact-inner">
-                                            <input name="mobile" type="number" placeholder="Enter Mobile">
-                                        </div>
-
-                                        <div class="contact-inner">
-                                            <textarea name="address" placeholder="Address"></textarea>
-                                        </div>
-
-
-                                        <div class="contact-inner">
-                                            <select name="mobile" type="text">
-                                                <option value=""> - Package Type - </option>
-                                                <option value=""> Silver (1 Month)</option>
-                                                <option value=""> Golden (3 Month)</option>
-                                                <option value=""> Diamond (6 Month)</option>
-                                                <option value="">Platinum (12 Year)</option>
-
-                                            </select>
-                                        </div>
-                                                        
-                                        <div class="submit-btn mt-20">
-                                            <button class="ht-btn ht-btn-md" type="submit">Submit</button>
+                                        @if(isset($data->profile_photo_path))
+                                        <img src="{{ asset('public/servicemanprofile/'.$data->profile_photo_path) }}" style="height:80px;" />
+                                        @endif
+                                        <br>
+                                            <h6>Name : {{ isset($data->name) ? $data->name : '' }}</h6>
+                                            <h6>Email : {{ isset($data->email) ? $data->email : '' }}</h6>
+                                            <h6>Mobile : {{ isset($data->mobile) ? $data->mobile : '' }}</h6>
+                                            <h6>Address : {{ isset($data->address) ? $data->address : '' }}</h6>
                                             
                                         </div>
+
+                                    
+                                       
+                                      
                                     </div>
-                                </form>
+                               
                                 </div>
                             </div>
                         </div>
