@@ -1,4 +1,3 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function AddEditModal(id=null){
         $("#AddEditModal").modal('show');
@@ -158,7 +157,6 @@
                 console.log(data);
                 var myurl = $(this).attr('href');
                 var page=$(this).attr('href').split('page=')[1];
-  
                 getData(page);
             }
         })

@@ -58,8 +58,9 @@ class ApplyServiceController extends BaseController
 
 
     public function assignTask(Request $request){
-
-    return ApplyService::where('id',$request->id)->update(['service_man_id'=>$request->ser_id,'status'=>1]);
+      $assign_date = date('Y-m-d');
+      $assign_time = date('H:i:s');
+    return ApplyService::where('id',$request->id)->update(['service_man_id'=>$request->ser_id,'assign_date'=>$assign_date,'assign_time'=>$assign_time,'status'=>1]);
 
     }
     

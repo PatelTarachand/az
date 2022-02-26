@@ -33,14 +33,13 @@ use App\Http\Controllers\WebsiteController;
                                     
                                     <div class="item" style="background:white; border-left: 7px solid #086AD8;">
                                         <div class="row">
-                                            <div class="col-md-2">
-                                                <center>
-                                                <img style="height: 66px;border-radius: 10px;" class="img-fulid img-responsive" src="{{ asset('/public/uploadFiles/'.WebsiteController::getValue('categories', 'id', $data->category_id, 'img')) }}" alt="">
-                                                </center>   
-                                            </div>
+                                            
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-12">
                                                 <div class="job-description">
+                                                Customer Name : {{ $data->name }} <br>
+                                                Customer Mobile : {{ $data->mobile }} <br>
+                                                Customer Address : {{ $data->manual_address }} <br>
                                                 Requested for  {{ WebsiteController::getValue('categories', 'id', $data->category_id, 'name') }} : 
                                                         
                                                         {{ WebsiteController::getValue('sub_categories', 'id', $data->sub_category_id, 'subCategoryName') }} <br>
@@ -54,21 +53,25 @@ use App\Http\Controllers\WebsiteController;
                                                             @endif
                                                             <br>
                                                    Service Description : {{ $data->description }}<br>
-                                                   Address : {{ $data->manual_address }} <br>
-                                                  @if(isset($data->apply_date))  Request Date Time: {{ $data->apply_date }} {{ $data->apply_time }} @endif <br>
-
-                                                  @if(isset($data->complete_service_date))  Completed Service Date Time: {{ $data->complete_service_date }} {{ $data->complete_service_time }} @endif
+                                                   
+                                                 
+                                                   Request Service On: {{ date('d-m-Y',strtotime($data->apply_date)) }} {{ $data->apply_time }} </br>
+                                                            
+                                                           
+                                                            @if($data->status == 1)
+                                                            Assign Task On : {{ date('d-m-Y',strtotime($data->assign_date)) }} {{ $data->assign_time }} 
+                                                            </br>
+                                                            <a href="{{ route('startWork',$data->id) }}" class="btn btn-primary">Start Work</a>
+                                                                   
+                                                            @elseif($data->status == 2)
+                                                            Assign Task On : {{ date('d-m-Y',strtotime($data->assign_date)) }} {{ $data->assign_time }}   </br>
+                                                           Start Work On : {{ date('d-m-Y',strtotime($data->start_work_date)) }} {{ $data->start_work_time }}                       
+                                                            @endif
                                                   
                                                     
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
                                           
-                                            <div class="job-description">
-                                            @if(isset($data->service_man_id))  Completed Service Date Time: {{ $data->service_man_id }}  @endif
-                                            </div>
-                                         
-                                      </div
                                             
                                         </div>
                                     </div>
@@ -80,9 +83,8 @@ use App\Http\Controllers\WebsiteController;
                     </div>  
                 </div>
             </div>
-             <!--====================  footer area ====================-->
+           
 
-            @if(!$items->isEmpty())
                <!--====================  Conact us Section Start ====================-->
             <div class="feature-images-wrapper bg-gray section-space--ptb_100" style="padding-top: 19px;">
                 <div class="container">
@@ -92,7 +94,7 @@ use App\Http\Controllers\WebsiteController;
                             <!-- section-title-wrap Start -->
                             <div class="section-title-wrap text-center">
                            
-                                <h3 class="heading">Item List</h3>
+                                <h3 class="heading">Add Item</h3>
                            
                             </div>
                             <!-- section-title-wrap Start -->
@@ -116,38 +118,29 @@ use App\Http\Controllers\WebsiteController;
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                @foreach($items as $item)
-                                   
+
+                                
                                      <tbody>
                                         <tr>
-                                            <td>{{ $loop->index+1 }}</td>
-                                            <td>{{ $item->item_name }}</td>
-                                            <td>{{ $item->price }}</td>
-                                            <td>{{ $item->qty }}</td>
-                                            <td style="text-align:right;padding-right:10px;"> @if($item->status==2) 0 @else {{ $item->total }} @endif </td>
-                                            <td>@if($item->status==0)
-                                            <a href="{{ route('ItemAction',[$item->id,'1']) }}" type="button" class="btn btn-success" >Approved</a>
-                                            <a href="{{ route('ItemAction',[$item->id,'2']) }}" type="button"  class="btn btn-danger" >Cancel</a>
-                                            @elseif($item->status==1)
-                                                    <span style="color:green">Approved</span>
-                                                    @elseif($item->status==2)
-                                                    <span style="color:red">Cancel</span>
-                                             @endif
-                                             
-                                             
-                                              </td>
+                                        <td></td>
+                                          <td><input type="text" id="name" class="form-class"/></td>
+                                          <td><input type="number" id="price" onchange="total()" />
+                                          <input type="hidden" id="service_man_id" value="{{ auth()->user()->id }}" />
+                                          <input type="hidden" id="user_id" value="{{ $data->user_id }}" />
+                                          <input type="hidden" id="service_id" value="{{ $data->id }}" />
+                                          </td>
+                                          
+                                      
+                                          <td><input type="number" id="qty" onchange="total()" /></td>
+                                          <td><input type="number" id="total" readonly /></td>
+                                          <td><input type="button" class="btn btn-primary" id="button" value="Add" /></td>
                                         </tr>
                                     </tbody> 
-                                @endforeach  
-                                <thead>
-                                        <tr>
-                                            <th colspan="4" style="text-align:right;">Total Item</th>
-                                           
-                                       
-                                            <th style="text-align:right;padding-right:10px;">{{ $sum }}</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
+
+                                    <tfoot  id="item_details">
+                                    </tfoot>
+                                
+                               
                                 <table>
                                     
                                 </div>
@@ -158,39 +151,93 @@ use App\Http\Controllers\WebsiteController;
                 </div>
             </div>
              <!--====================  footer area ====================-->
-            @endif
+           
 
- 
-               <div class="feature-images-wrapper bg-gray " style="padding-top: 19px;">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="ht-simple-job-listing move-up animate">
-                                <div clas="list">
-                                   
-                                   <table class="table">
-                                    <thead>
-                                       
-                                        
-                                      
-                                        <tr>
-                                            <th>Total With Service Charges</th>
-                                            <th><a href="" class="btn btn-primary"> {{ $total }} Pay </a></th>
-                                        </tr>
-                                        
-                                    </thead>
-                             
-                                <table>
-                                    
-                                </div>
-                                </div>
-                            </div>
-                        </div>
+             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+               
+       <script>
+        function total(){
+          var  price = $('#price').val();
+          var  qty =   $('#qty').val();
+          var total = price*qty;
+
+            $('#total').val(total);
+
+        }
+
+        function getData(){
+            
+            var service_id = $('#service_id').val();
+           
+            $.ajax({
+                url:"{{ route('item_details') }}?id="+service_id,
+                type:"GET",
+                success:function(res){
                   
-            </div>
-       
+                   $("#item_details").html(res); 
+                }
+            })
 
-</div>
-       
+        }
+
+        getData();
+
+       $('#button').on('click', function(){
+        
+       var name =  $('#name').val();
+       var price = $('#price').val();
+       var qty =   $('#qty').val();
+       var total = $('#total').val();
+       var service_man_id = $('#service_man_id').val();
+       var user_id = $('#user_id').val();
+
+       var service_id = $('#service_id').val();
+       var status = true;
+
+        if(name==''){
+            alert('Please Enter Name');
+            status = false;
+        }else{
+            status = true;
+        } 
+
+         if(price==''){
+            alert('Please Enter Price');
+            status = false;
+        }else{
+            status = true;
+        } 
+
+         if(qty==''){
+            alert('Please Enter Qty');
+            status = false;
+        }else{
+            status = true;
+        } 
+
+         if(total==''){
+            alert('Please Enter Amount');
+            status = false;
+        }else{
+            status = true;
+        }
+
+
+        $.ajax({
+            url:"{{ route('add_items') }}?item_name="+name+"&price="+price+"&qty="+qty+"&total="+total+"&user_id="+user_id+"&service_man_id="+service_man_id+"&service_id="+service_id,
+            type:'GET',
+            success:function(res){
+             $('#name').val('');
+             $('#price').val('');
+             $('#qty').val('');
+            $('#total').val('');
+                getData();
+            }
+
+        }); 
+
+        });
+       </script>
 
     @endsection

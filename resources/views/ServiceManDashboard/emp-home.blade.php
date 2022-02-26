@@ -36,16 +36,12 @@ use App\Http\Controllers\WebsiteController;
                                     <div class="item" style="background:white; border-left: 7px solid #086AD8;">
                                     <a href="{{ route('empApplyServicesDetails',$row->id) }}">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="job-info">
-                                                <center>
-                                                <img style="height: 66px;border-radius: 10px;" class="img-fulid img-responsive" src="{{ asset('/public/uploadFiles/'.WebsiteController::getValue('categories', 'id', $row->category_id, 'img')) }}" alt="">
-                                                <center>
-                                                </div>
-                                            </div>
+                                            
 
-                                            <div class="col-md-8">
+                                            <div class="col-md-12">
                                                 <div class="job-description">
+                                                Customer Name : {{ $row->name }} <br>
+                                                Customer Mobile : {{ $row->mobile }} <br>
                                                Requested for  {{ WebsiteController::getValue('categories', 'id', $row->category_id, 'name') }} : 
                                                         
                                                         {{ WebsiteController::getValue('sub_categories', 'id', $row->sub_category_id, 'subCategoryName') }} <br>
@@ -58,7 +54,21 @@ use App\Http\Controllers\WebsiteController;
                                                                 Proccessing                
                                                             @endif
                                                             <br>
-                                                    Request Date Time: {{ $row->apply_date }} {{ $row->apply_time }}
+                                                            Request Service On:  {{ date('d-m-Y',strtotime($row->apply_date)) }} {{ $row->apply_time }}</br>
+                                                     @if($row->status == 0)
+                                                   
+                                                            @elseif($row->status == 1)
+                                                            Assign Task Time Date :   {{ date('d-m-Y',strtotime($row->assign_date)) }} {{ $row->assign_time }} 
+                                                            </br>
+                                                            <a href="{{ route('startWork',$row->id) }}" class="btn btn-primary">Start Work</a>
+                                                                   
+                                                            @elseif($row->status == 2)
+                                                            Assign Task On :   {{ date('d-m-Y',strtotime($row->assign_date)) }} {{ $row->assign_time }} 
+                                                            </br>
+                                                            Work Start On : {{ date('d-m-Y',strtotime($row->start_work_date)) }} {{ $row->start_work_time }}                       
+                                                            @endif
+
+                                                           
                                                 </div>
                                             </div>
 

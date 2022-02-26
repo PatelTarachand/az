@@ -83,7 +83,7 @@
 
                             <!-- brand logo -->
                             <div class="header__logo">
-                            <a href="{{ route('index') }}">
+                            <a href="{{ route('empHome') }}">
                                     <img src="{{ asset('public/web/a2ztech.png') }}" width="160" height="48" class="img-fluid" alt="A-Z Service">
                                 </a>
                             </div>
